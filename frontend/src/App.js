@@ -31,7 +31,7 @@ function App() {
             <Route path='/add-question' element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
               <Route index element={<AddQuestion />} />
             </Route>
-            <Route path='/question' element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+            <Route path='/question/:id' element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
               <Route index element={<ViewQuestion />} />
             </Route>
           </Routes>

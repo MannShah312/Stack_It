@@ -28,7 +28,7 @@ export default function Question() {
       const bodyJSON = {
         title: title,
         body: body,
-        tags: JSON.stringify(tags),
+        tags: tags,
         username: account.username
       };
 

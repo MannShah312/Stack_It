@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Question from "../model/question.js";
+import Answer from "../model/answer.js";
 
-// Handler for uploading a question
 export const uploadQuestion = async (req, res) => {
     try {
         const questionData = new Question({
@@ -27,7 +27,7 @@ export const lookupQuestion = async (req, res) => {
     };
 
     try {
-        const questionId = new mongoose.Types.ObjectId(req.params.id);  // Use `Types.ObjectId` directly for querying
+        const questionId = new mongoose.Types.ObjectId(req.params.id);
         console.log(questionId);
         const questionDetails = await Question.aggregate([
             {
@@ -184,7 +184,7 @@ export const allQuestions = async (req, res) => {
     }
 };
 
-// 🔼 Upvote Question
+
 export const upvoteQuestion = async (req, res) => {
     try {
         const questionId = req.params.id;
@@ -201,7 +201,6 @@ export const upvoteQuestion = async (req, res) => {
 };
 
 
-// 🔽 Downvote Question
 export const downvoteQuestion = async (req, res) => {
     try {
         const questionId = req.params.id;
@@ -214,5 +213,27 @@ export const downvoteQuestion = async (req, res) => {
     } catch (error) {
         console.error("Error downvoting question:", error);
         res.status(400).json({ msg: "Error downvoting question" });
+    }
+};
+
+
+export const getUnansweredQuestions = async (req, res) => {
+    try {
+        const answeredQuestions = await Answer.distinct("question_id");
+        const unansweredQuestions = await Question.find({
+            _id: { $nin: answeredQuestions }
+        }).sort({ created_at: -1 });
+
+        if (unansweredQuestions.length === 0) {
+            return res.status(404).json({ msg: "No unanswered questions found" });
+        }
+
+        return res.status(200).json({ 
+            msg: "Unanswered questions retrieved successfully", 
+            data: unansweredQuestions 
+        });
+    } catch (error) {
+        console.error("Error retrieving unanswered questions:", error);
+        return res.status(500).json({ msg: "Error retrieving unanswered questions" });
     }
 };

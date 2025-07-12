@@ -46,4 +46,19 @@ export const SERVICE_URLS = {
         url: '/api/allquestion',
         method: 'GET'
     },
+    lookupQuestion: {
+        url: '/api/question', 
+        method: 'GET',
+        query: true
+    },
+    upvoteQuestion: {
+        url: '/api/question/upvote',
+        method: 'PUT',
+        query: true
+    },
+    downvoteQuestion: {
+        url: '/api/question/downvote', 
+        method: 'PUT',
+        query: true
+    },
 }

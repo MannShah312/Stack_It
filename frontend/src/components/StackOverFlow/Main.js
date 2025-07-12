@@ -23,6 +23,15 @@ export default function Main({ questions, loading, error }) {
   const [activeFilter, setActiveFilter] = useState("Newest");
   const filters = ["Newest", "Oldest", "Unanswered"];
 
+  let filteredQuestions = [...questions];
+  if (activeFilter === "Oldest") {
+    filteredQuestions.reverse();
+  } else if (activeFilter === "Unanswered") {
+    filteredQuestions = filteredQuestions.filter(
+      (q) => (q.answerDetails?.length || 0) === 0
+    );
+  }
+
   return (
     <main className="main-content">
       <div className="main-header">
@@ -58,7 +67,7 @@ export default function Main({ questions, loading, error }) {
         {error && <p className="error-message">{error}</p>}
         {!loading &&
           !error &&
-          questions.map((question) => (
+          filteredQuestions.map((question) => (
             <Allquestions key={question._id} question={question} />
           ))}
       </div>

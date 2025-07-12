@@ -8,6 +8,7 @@
   --border-color: rgba(255, 255, 255, 0.1);
 }
 
+
 .add-question {
   min-height: 100vh;
   background: var(--primary-bg);
@@ -155,6 +156,15 @@ input[type="text"]::placeholder {
   color: var(--primary-text);
   border: none;
   min-height: 200px;
+}
+
+.rti--tag {
+  color: black;
+  border: 1px solid black;
+
+}
+.rti--tag button{
+  margin: 0;
 }
 
 .button {
