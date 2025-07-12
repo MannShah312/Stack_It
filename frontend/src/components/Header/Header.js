@@ -40,7 +40,7 @@ export default function Header() {
 
         <div className="header-left">
           <Link to="/" className="header-logo">
-            Stackit
+            StackIt
           </Link>
         </div>
 
@@ -76,7 +76,6 @@ export default function Header() {
         </div>
       </div>
       
-      {/* --- Mobile Navigation Menu --- */}
       {isMenuOpen && (
           <nav className="header-nav-mobile">
             <Link to="/" onClick={toggleMenu}>Home</Link>
