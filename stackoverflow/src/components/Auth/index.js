@@ -79,7 +79,7 @@ export default function Index({ isUserAuthenticated }) {
         <p>Add another way to log in</p>
         <div className="sign-options">
           <div className="single-option">
-            <img src="https://via.placeholder.com/150" alt="google" />
+            <img src="/Assets/google-logo.jpg" alt="google" />
             <p>Login with Google</p>
           </div>
         </div>

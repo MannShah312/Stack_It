@@ -10,7 +10,7 @@ const __dirname = path.resolve();
 dotenv.config()
 const app = express()
 
-connectToDB("mongodb://0.0.0.0:27017/stackoverflow")
+connectToDB("mongodb+srv://burgersalison782:burgers%40005@cluster0.kz0ac.mongodb.net/StackIt?retryWrites=true&w=majority&appName=Cluster0")
 .then(() => {
     console.log('Connected to MongoDB')
 })
