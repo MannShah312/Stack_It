@@ -4,7 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import './CSS/Question.css'; 
 import { TagsInput } from 'react-tag-input-component';
 import { useNavigate } from 'react-router-dom';
-import { DataContext } from '../../context/DataProvider';
+import { DataContext } from '../../context/DataProvider.js';
 import { API } from '../../service/api.js'; // Ensure correct path
 
 export default function Question() {

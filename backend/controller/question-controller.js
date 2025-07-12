@@ -102,10 +102,10 @@ export const oneQuestion = async (req, res) => {
 
     try {
         const questionId = new mongoose.Types.ObjectId(req.params.id);
-        console.log("Requested ID:", req.params.id);  // Log before the aggregation
+        console.log("Requested ID:", req.params.id);  
         const questionDetails = await Question.aggregate([
             {
-                $match: { _id: questionId },
+                $match: { _id: questionId },    
             },
             {
                 $lookup: {
@@ -165,5 +165,21 @@ export const oneQuestion = async (req, res) => {
     } catch (e) {
         console.error("Error retrieving questions:", e);
         res.status(400).send(error);
+    }
+};
+
+
+export const allQuestions = async (req, res) => {
+    try {
+        const questions = await Question.find().sort({ createdAt: -1 }); 
+        console.log(questions);
+        if (questions.length === 0) {
+            return res.status(404).json({ message: "No questions found" });
+        }
+        console.log("All questions retrieved successfully");
+        return res.status(200).json(questions);
+    } catch (e) {
+        console.error("Error retrieving all questions:", e);
+        res.status(400).json({ message: "Error in retrieving questions", error: "Bad request" });
     }
 };

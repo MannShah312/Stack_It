@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
-import Header from "./components/Header/Header";
+import Header from "./components/Header/Header.js";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import StackOverflow from './components/StackOverFlow/index.js';
 import AddQuestion from './components/Add-Questions/Question.js';
 import ViewQuestion from "./components/ViewQuestion/index.js";
-import Auth from './components/Auth';
+import Auth from './components/Auth/index.js';
 import DataProvider from './context/DataProvider.js';
 
 const PrivateRoute = ({ isAuthenticated }) => {
