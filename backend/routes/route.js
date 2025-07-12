@@ -1,4 +1,4 @@
-import { signupUser, loginUser } from '../controller/user-controller.js';
+import { signupUser, loginUser, logoutUser } from '../controller/user-controller.js';
 import { authenticateToken ,createNewToken } from '../controller/jwt-controller.js';
 import { uploadQuestion, lookupQuestion, oneQuestion, allQuestions, upvoteQuestion, downvoteQuestion } from '../controller/question-controller.js';
 import express from 'express';
@@ -10,6 +10,7 @@ const router = express.Router();
 
 router.post('/signup', signupUser);
 router.post('/login', loginUser);
+router.post('/logout', authenticateUser, logoutUser); 
 router.post('/token', createNewToken);
 router.post('/question', authenticateUser, uploadQuestion);
 router.post('/answer', authenticateUser, uploadAnswer);
