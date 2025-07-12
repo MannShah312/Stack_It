@@ -54,3 +54,20 @@ export const loginUser = async (req,res) => {
     }
 };
 
+export const logoutUser = async (req, res) => {
+    try {
+        const refreshToken = req.body.refreshToken;
+
+        if (!refreshToken) {
+            return res.status(400).json({ msg: "Refresh token missing" });
+        }
+
+        // Remove the token from the DB
+        await Token.deleteOne({ token: refreshToken });
+
+        return res.status(200).json({ msg: "Logout successful" });
+    } catch (error) {
+        console.error("❌ Error logging out:", error.message);
+        return res.status(500).json({ msg: "Logout failed" });
+    }
+};
