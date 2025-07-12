@@ -39,7 +39,7 @@
 }
 
 .stat-item.answered {
-  border: 1px solid #4caf50; /* Green for answered */
+  border: 1px solid #4caf50; 
   color: #4caf50;
   border-radius: 6px;
   padding: 6px 0;

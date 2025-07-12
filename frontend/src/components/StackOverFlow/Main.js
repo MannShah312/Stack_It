@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { API } from "../../service/api.js";
 import Allquestions from './Allquestions';
 import './CSS/Main.css';
 
@@ -19,7 +20,7 @@ export default function Main({ questions, loading, error }) {
         <main className="main-content">
             <div className="main-header">
                 <h1>All Questions</h1>
-                <Link to="/ask-question" className="ask-question-btn">
+                <Link to="/add-question" className="ask-question-btn">
                     Ask Question
                 </Link>
             </div>

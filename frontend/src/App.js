@@ -25,8 +25,8 @@ function App() {
         <Router>
           <Routes>
             <Route path="/login" element={<Auth isUserAuthenticated={isUserAuthenticated} />} />
-            <Route path='/' element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
-              <Route index element={<StackOverflow />} />
+            <Route path='/'>
+              <Route index element={<><Header /><StackOverflow /></>} />
             </Route>
             <Route path='/add-question' element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
               <Route index element={<AddQuestion />} />
