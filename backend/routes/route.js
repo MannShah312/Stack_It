@@ -4,13 +4,14 @@ import { uploadQuestion, lookupQuestion, oneQuestion } from '../controller/quest
 import express from 'express';
 import { uploadAnswer } from '../controller/answer-controller.js';
 import { uploadComment } from '../controller/comment-controller.js';
+import { authenticateUser } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
 router.post('/signup', signupUser);
 router.post('/login', loginUser);
 router.post('/token', createNewToken);
-router.post('/question', uploadQuestion);
+router.post('/question', authenticateUser, uploadQuestion);
 router.post('/answer', uploadAnswer);
 router.post('/comment/:id', uploadComment);
 router.get('/question/:id',lookupQuestion);

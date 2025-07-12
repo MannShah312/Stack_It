@@ -8,14 +8,17 @@ dotenv.config();
 
 export const signupUser = async (req,res) => {
     try {
+        console.log('Request body:', req.body);
         const hashed = await bcrypt.hash(req.body.password,10);
         const user = new User({
             username: req.body.username,
             email: req.body.email,
             password: hashed
         })
+        console.log(user);
 
         await user.save();
+        console.log('User signed up successfully');
 
         return res.status(200).json({msg: 'Signup Successfull'});
     } catch (error) {

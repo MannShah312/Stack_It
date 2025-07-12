@@ -11,7 +11,7 @@ export const uploadQuestion = async (req, res) => {
             user: req.body.username
         });
         await questionData.save();
-        const response = { isFailure: false, msg: "Question uploaded successfully" };
+        const response = { isFailure: false, msg: "Question uploaded successfully", questionId: questionData._id};
         console.log("Success response:", response);
         return res.status(201).json(response);
     } catch (error) {
