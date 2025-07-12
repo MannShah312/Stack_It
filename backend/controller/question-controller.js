@@ -11,7 +11,7 @@ export const uploadQuestion = async (req, res) => {
             user: req.body.username
         });
         await questionData.save();
-        const response = { isFailure: false, msg: "Question uploaded successfully" };
+        const response = { isFailure: false, msg: "Question uploaded successfully", questionId: questionData._id};
         console.log("Success response:", response);
         return res.status(201).json(response);
     } catch (error) {
@@ -181,5 +181,38 @@ export const allQuestions = async (req, res) => {
     } catch (e) {
         console.error("Error retrieving all questions:", e);
         res.status(400).json({ message: "Error in retrieving questions", error: "Bad request" });
+    }
+};
+
+// 🔼 Upvote Question
+export const upvoteQuestion = async (req, res) => {
+    try {
+        const questionId = req.params.id;
+        const updated = await Question.findByIdAndUpdate(
+            questionId,
+            { $inc: { upvotes: 1 } },
+            { new: true }
+        );
+        res.status(200).json({ msg: "Upvoted successfully", upvotes: updated.upvotes });
+    } catch (error) {
+        console.error("Error upvoting question:", error);
+        res.status(400).json({ msg: "Error upvoting question" });
+    }
+};
+
+
+// 🔽 Downvote Question
+export const downvoteQuestion = async (req, res) => {
+    try {
+        const questionId = req.params.id;
+        const updated = await Question.findByIdAndUpdate(
+            questionId,
+            { $inc: { downvotes: 1 } },
+            { new: true }
+        );
+        res.status(200).json({ msg: "Downvoted successfully", downvotes: updated.downvotes });
+    } catch (error) {
+        console.error("Error downvoting question:", error);
+        res.status(400).json({ msg: "Error downvoting question" });
     }
 };
