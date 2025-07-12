@@ -56,9 +56,9 @@
 .filter-btn {
     background-color: transparent;
     border: none;
-    border-left: 1px solid var(--border-color);
+    border: 1px solid var(--border-color);
     color: var(--secondary-text);
-    padding: 10px 16px;
+    margin: 5px 5px;
     font-size: 0.9rem;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
