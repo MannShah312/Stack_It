@@ -1,47 +1,55 @@
-import { FilterList } from '@mui/icons-material';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Allquestions from './Allquestions';
 import './CSS/Main.css';
 
-export default function Main({ questions }) {
-  return (
-    <div className="main">
-      <div className="main-container">
-        <div className="main-top">
-          <h2>All Questions</h2>
-          <Link to="/add-question">
-            <button>Ask Questions</button>
-          </Link>
-        </div>
-        <div className='main-desc'>
-          <p>{questions && questions.length} Questions</p>
-          <div className='main-filter'>
-            <div className='main-tabs'>
-              <div className='main-tab'>
-                <Link to="/">Newest</Link>
-              </div>
-              <div className='main-tab'>
-                <Link to="/">Active</Link>
-              </div>
-              <div className='main-tab'>
-                <Link to="/">More</Link>
-              </div>
-              <div className="main-filter-item">
-                <FilterList />
-                <p>Filter</p>
-              </div>
+
+const FilterIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+    </svg>
+);
+
+
+export default function Main({ questions, loading, error }) {
+    const [activeFilter, setActiveFilter] = useState('Newest');
+    const filters = ['Newest', 'Active', 'Unanswered', 'Score', 'Frequently Asked'];
+
+    return (
+        <main className="main-content">
+            <div className="main-header">
+                <h1>All Questions</h1>
+                <Link to="/ask-question" className="ask-question-btn">
+                    Ask Question
+                </Link>
             </div>
-          </div>
-        </div>
-        <div className="questions">
-          {Array.isArray(questions) && questions.map((_q, index) => (
-            <div key={index} className="question">
-              <Allquestions question={_q} />
+
+            <div className="main-controls">
+                <p className="question-count">{questions.length} questions</p>
+                <div className="main-filters">
+                    {filters.map(filter => (
+                        <button 
+                            key={filter} 
+                            className={`filter-btn ${activeFilter === filter ? 'active' : ''}`}
+                            onClick={() => setActiveFilter(filter)}
+                        >
+                            {filter}
+                        </button>
+                    ))}
+                    <button className="filter-btn more-filters-btn">
+                        <FilterIcon />
+                        Filter
+                    </button>
+                </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+
+            <div className="questions-list">
+                {loading && <p>Loading questions...</p>}
+                {error && <p className="error-message">{error}</p>}
+                {!loading && !error && questions.map((question) => (
+                    <Allquestions key={question._id} question={question} />
+                ))}
+            </div>
+        </main>
+    );
 }

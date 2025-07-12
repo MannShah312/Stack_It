@@ -1,76 +1,68 @@
-import { Avatar } from "@mui/material";
-import React from "react";
-import "./CSS/Allquestions.css";
-import { Link } from "react-router-dom";
-import ReactHtmlParser from 'html-react-parser'  
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './CSS/Allquestions.css';
 
-function AllQuestions({question}) {
-  console.log("AllQuestions component rendered");
-  console.log("Question prop:", question);
 
-  console.log(question?.tags[0]);
-  let tags = JSON.parse(question?.tags[0]);
-  function truncate(str, n) {
-    return str?.length > n ? str.substring(0,n-1)+"..." : str;
-  }
-  
-  return (
-    <div className="all-questions">
-      <div className="all-questions-container">
-        <div className="all-questions-left">
-          <div className="all-options">
-            <div className="all-option">
-              <p>0</p>
-              <span>votes</span>
+const formatCount = (num) => {
+    if (num >= 1000) {
+        return (num / 1000).toFixed(1) + 'k';
+    }
+    return num;
+};
+
+const timeAgo = (dateString) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const seconds = Math.round((now - date) / 1000);
+    const minutes = Math.round(seconds / 60);
+    const hours = Math.round(minutes / 60);
+    const days = Math.round(hours / 24);
+
+    if (seconds < 60) return `${seconds}s ago`;
+    if (minutes < 60) return `${minutes}m ago`;
+    if (hours < 24) return `${hours}h ago`;
+    return `${days}d ago`;
+};
+
+export default function Allquestions({ question }) {
+    return (
+        <div className="question-item-card">
+            <div className="question-stats">
+                <div className="stat-item">
+                    <span>{formatCount(question.votes || 0)}</span>
+                    <p>Votes</p>
+                </div>
+                <div className={`stat-item ${question.answerDetails?.length > 0 ? 'answered' : ''}`}>
+                    <span>{formatCount(question.answerDetails?.length || 0)}</span>
+                    <p>Answers</p>
+                </div>
+                <div className="stat-item">
+                    <span>{formatCount(question.views || 0)}</span>
+                    <p>Views</p>
+                </div>
             </div>
-            <div className="all-option">
-              <p>{question?.answerDetails?.length}</p>
-              <span>answers</span>
+            <div className="question-summary">
+                <Link to={`/question?q=${question._id}`} className="question-title-link">
+                    <h3>{question.title}</h3>
+                </Link>
+                <div className="question-meta">
+                    <div className="question-tags">
+                        {question.tags.map((tag) => (
+                            <span key={tag} className="tag">{tag}</span>
+                        ))}
+                    </div>
+                    <div className="question-author-info">
+                        <img 
+                            src={question.user?.profilePicture || `https://ui-avatars.com/api/?name=${question.user?.name}&background=3f51b5&color=fff`} 
+                            alt={question.user?.name} 
+                            className="author-avatar"
+                        />
+                        <p>
+                            <span className="author-name">{question.user?.name || 'Anonymous'}</span> asked {timeAgo(question.created_at)}
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div className="all-option">
-              <small>2 views</small>
-            </div>
-          </div>
         </div>
-        <div className="question-answer">
-          <Link to={`/question?q=${question?._id}`}>{question?.title}</Link>
-          <div
-            style={{
-              maxWidth: "90%",
-            }}
-          >
-            <div>{ReactHtmlParser(truncate(question?.body,200))}</div>
-          </div>
-          
-          <div
-            style={{
-              display: "flex",
-            }}
-          >
-            {tags.map((_tag) => (
-              <p
-                style={{
-                  margin: "10px 5px",
-                  padding: "5px 10px",
-                  backgroundColor: "#007cd446",
-                  borderRadius: "3px",
-                }}
-              >
-                {_tag}
-              </p>
-            ))}
-          </div>
-          <div className="author">
-            <small>{new Date(question?.created_at).toLocaleString()}</small>
-            <div className="auth-details">
-              <Avatar src={question?.user?.photo}/>
-              <p>{question?.user?.displayName ? question?.user?.displayName : String(question?.user?.email).split('a')[0]} </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
-
-export default AllQuestions;

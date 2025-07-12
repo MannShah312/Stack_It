@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import './CSS/index.css';
-import Sidebar from "./Sidebar";
 import Main from "./Main";
 import { API } from "../../service/api";
 
 export default function Index() {
-  const [question, setQuestion] = useState([])
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function getQuestions() {
       try {
+        setLoading(true);
         const response = await API.allQuestions();
         if (response.isSuccess) {
-          console.log(response.data);
-          setQuestion(response.data.reverse());
+          setQuestions(response.data.reverse());
+        } else {
+           setError("Failed to fetch questions.");
         }
       } catch (error) {
         console.error(error);
+        setError("An error occurred while fetching questions.");
+      } finally {
+        setLoading(false);
       }
     }
     getQuestions();
@@ -25,8 +31,7 @@ export default function Index() {
   return (
     <div className="stack-index">
       <div className="stack-index-content">
-        <Sidebar />
-        <Main question = { question }/>
+        <Main questions={questions} loading={loading} error={error} />
       </div>
     </div>
   );
