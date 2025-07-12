@@ -183,3 +183,36 @@ export const allQuestions = async (req, res) => {
         res.status(400).json({ message: "Error in retrieving questions", error: "Bad request" });
     }
 };
+
+// 🔼 Upvote Question
+export const upvoteQuestion = async (req, res) => {
+    try {
+        const questionId = req.params.id;
+        const updated = await Question.findByIdAndUpdate(
+            questionId,
+            { $inc: { upvotes: 1 } },
+            { new: true }
+        );
+        res.status(200).json({ msg: "Upvoted successfully", upvotes: updated.upvotes });
+    } catch (error) {
+        console.error("Error upvoting question:", error);
+        res.status(400).json({ msg: "Error upvoting question" });
+    }
+};
+
+
+// 🔽 Downvote Question
+export const downvoteQuestion = async (req, res) => {
+    try {
+        const questionId = req.params.id;
+        const updated = await Question.findByIdAndUpdate(
+            questionId,
+            { $inc: { downvotes: 1 } },
+            { new: true }
+        );
+        res.status(200).json({ msg: "Downvoted successfully", downvotes: updated.downvotes });
+    } catch (error) {
+        console.error("Error downvoting question:", error);
+        res.status(400).json({ msg: "Error downvoting question" });
+    }
+};

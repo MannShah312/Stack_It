@@ -11,7 +11,8 @@ export default function Header() {
       <div className='header-container'>
         <div className="header-left ">
           <Link to="/">
-            <img src="..\..\..\public\Assets\stack-overflow.png" alt="logo"/>
+            {/* <img src="..\..\..\public\Assets\stack-overflow.png" alt="logo"/> */}
+            StackIt
           </Link>
           <h3>Products</h3>
         </div>
